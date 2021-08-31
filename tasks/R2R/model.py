@@ -1,10 +1,8 @@
 
-import torch
 import torch.nn as nn
 from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
-
 
 class EncoderLSTM(nn.Module):
     ''' Encodes navigation instructions, returning hidden state context (for
@@ -138,5 +136,4 @@ class AttnDecoderLSTM(nn.Module):
         h_tilde, alpha = self.attention_layer(h_1_drop, ctx, ctx_mask)        
         logit = self.decoder2action(h_tilde)
         return h_1,c_1,alpha,logit
-
 

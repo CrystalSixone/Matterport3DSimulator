@@ -29,10 +29,10 @@ if FILL_HOLES:
 SKYBOX_WIDTH = 1024
 SKYBOX_HEIGHT = 1024
 base_dir = 'data/v1/scans'
-skybox_template = '%s/%s/matterport_skybox_images/%s_skybox%d_sami.jpg'
+skybox_template = '%s/%s/%s/matterport_skybox_images/%s_skybox%d_sami.jpg'
 color_template = '%s/%s/undistorted_color_images/%s_i%s.jpg'
 depth_template = '%s/%s/undistorted_depth_images/%s_d%s.png'
-camera_template = '%s/%s/undistorted_camera_parameters/%s.conf'
+camera_template = '%s/%s/%s/undistorted_camera_parameters/%s.conf'
 skybox_depth_template = '%s/%s/matterport_skybox_images/%s_skybox_depth_small.png'
 
 
@@ -52,7 +52,7 @@ def camera_parameters(scan):
       respectively, for a given scan. Viewpoint IDs are used as dict keys. '''
   intrinsics = {}
   extrinsics = {}
-  with open(camera_template % (base_dir,scan,scan)) as f:
+  with open(camera_template % (base_dir,scan,scan,scan)) as f:
     pos = -1
     for line in f.readlines():
       if 'intrinsics_matrix' in line:
@@ -162,7 +162,7 @@ def depth_to_skybox(scan, visualize=VISUALIZE_OUTPUT, fill_holes=FILL_HOLES):
     for skybox_ix in range(6):
 
       # Load skybox image
-      skybox = cv2.imread(skybox_template % (base_dir,scan,pano,skybox_ix))
+      skybox = cv2.imread(skybox_template % (base_dir,scan,scan,pano,skybox_ix))
 
       # Skybox index 1 is the same orientation as camera image 1_5
       skybox_ctw,_ = extrinsics[pano + '_i1_5']

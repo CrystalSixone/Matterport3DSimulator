@@ -18,9 +18,9 @@ DOWNSIZED_HEIGHT = 512
 SKYBOX_WIDTH = 1024
 SKYBOX_HEIGHT = 1024
 base_dir = 'data/v1/scans'
-skybox_template = '%s/%s/matterport_skybox_images/%s_skybox%d_sami.jpg'
-skybox_small_template = '%s/%s/matterport_skybox_images/%s_skybox%d_small.jpg'
-skybox_merge_template = '%s/%s/matterport_skybox_images/%s_skybox_small.jpg'
+skybox_template = '%s/%s/%s/matterport_skybox_images/%s_skybox%d_sami.jpg'
+skybox_small_template = '%s/%s/%s/matterport_skybox_images/%s_skybox%d_small.jpg'
+skybox_merge_template = '%s/%s/%s/matterport_skybox_images/%s_skybox_small.jpg'
 
 
 
@@ -36,12 +36,12 @@ def downsizeWithMerge(scan):
     for skybox_ix in range(6):
 
       # Load and downsize skybox image
-      skybox = cv2.imread(skybox_template % (base_dir,scan,pano,skybox_ix))
+      skybox = cv2.imread(skybox_template % (base_dir,scan,scan,pano,skybox_ix))
       ims.append(cv2.resize(skybox,(DOWNSIZED_WIDTH,DOWNSIZED_HEIGHT),interpolation=cv2.INTER_AREA))
 
     # Save output
     newimg = np.concatenate(ims, axis=1)
-    assert cv2.imwrite(skybox_merge_template % (base_dir,scan,pano), newimg)
+    assert cv2.imwrite(skybox_merge_template % (base_dir,scan,scan,pano), newimg)
 
 
 def downsize(scan):
@@ -60,7 +60,7 @@ def downsize(scan):
       newimg = cv2.resize(skybox,(DOWNSIZED_WIDTH,DOWNSIZED_HEIGHT),interpolation=cv2.INTER_AREA)
 
       # Save output
-      assert cv2.imwrite(skybox_small_template % (base_dir,scan,pano,skybox_ix), newimg)
+      assert cv2.imwrite(skybox_small_template % (base_dir,scan,scan,pano,skybox_ix), newimg)
 
 
 if __name__ == '__main__':
